@@ -161,4 +161,6 @@ cython_debug/
 /data
 /notebooks
 /models
+logistic_regression/outputs
+/runs
 *.db

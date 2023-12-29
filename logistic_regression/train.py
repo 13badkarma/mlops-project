@@ -24,6 +24,8 @@ from torch.utils.tensorboard import SummaryWriter
 TRAIN_FILE_PATH = "../data/train.csv"
 TEST_FILE_PATH = "../data/test.csv"
 MODEL_PATH = "../models/model.skops"
+NOTEBOOK = "../notebooks/logistic_regression.ipynb"
+PREDICTION_FILE = "../data/predictions.csv"
 
 
 class Stage(Enum):
@@ -174,12 +176,19 @@ class TrainModel:
 
     def save_predicts_to_csv(self):
         y_pred = self.model.predict(X=self.X)
-        y_pred.to_csv("predicts_result_on_test.csv")
+        # возьмем признаки
+        df = self.X.copy()
+
+        # Добавляем столбец с предсказанными значениями
+        df["y_pred"] = y_pred
+
+        # Сохраняем DataFrame в CSV-файл
+        df.to_csv(PREDICTION_FILE)
 
 
 def check_dvc():
     # список файлов для проверки
-    files = [TRAIN_FILE_PATH, TEST_FILE_PATH, MODEL_PATH]
+    files = [TRAIN_FILE_PATH, TEST_FILE_PATH, MODEL_PATH, NOTEBOOK]
 
     # путь к репозиторию DVC,текущая
     dvc_repo_path = "."
