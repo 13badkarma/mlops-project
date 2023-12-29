@@ -2,7 +2,7 @@
 name = "logistic-regression"
 version = "0.1.0"
 description = "Logistic-regression for Social_Network_ads problem"
-authors = ["Pavel Perestoronin<true.perestoronin@gmail.com>"]
+authors = ["Pavel Perestoronin <true.perestoronin@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
