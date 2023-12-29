@@ -96,7 +96,7 @@ class TrainModel:
 
         # Set up TensorBoard
 
-        writer = SummaryWriter(log_dir="../runs")
+        writer = SummaryWriter(log_dir=self.cfg.tensorboard.folder_path)
 
         with mlflow.start_run(
             run_name=self.cfg.mlflow.run_name + "_" + self.stage.value

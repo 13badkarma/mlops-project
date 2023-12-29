@@ -9,4 +9,4 @@ mlflow:
   run_name: "logistic_regression"
 
 tensorboard:
-  folderpath: ""
+  folder_path: "../runs"
