@@ -7,8 +7,9 @@ repos:
     rev: 6.1.0
     hooks:
     - id: flake8
-      args: [--max-line-length=90]
+      args: [--max-line-length=100]
 -   repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
     - id: isort
+      args: ["--profile", "black", "--filter-files"]
