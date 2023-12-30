@@ -23,9 +23,10 @@ from torch.utils.tensorboard import SummaryWriter
 
 TRAIN_FILE_PATH = "../data/train.csv"
 TEST_FILE_PATH = "../data/test.csv"
+PREDICTION_FILE = "../data/predictions.csv"
+ORIGINAL_DATASET = "../data/Social_Network_Ads.csv"
 MODEL_PATH = "../models/model.skops"
 NOTEBOOK = "../notebooks/logistic_regression.ipynb"
-PREDICTION_FILE = "../data/predictions.csv"
 
 
 class Stage(Enum):
@@ -188,7 +189,7 @@ class TrainModel:
 
 def check_dvc():
     # список файлов для проверки
-    files = [TRAIN_FILE_PATH, TEST_FILE_PATH, MODEL_PATH, NOTEBOOK]
+    files = [TRAIN_FILE_PATH, TEST_FILE_PATH, MODEL_PATH, NOTEBOOK, ORIGINAL_DATASET]
 
     # путь к репозиторию DVC,текущая
     dvc_repo_path = "."
