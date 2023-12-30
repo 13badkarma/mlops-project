@@ -89,6 +89,7 @@ class TrainModel:
         Логирование эксперимента в mlflow, tensorboard
 
         """
+        tag = self.stage.value
         repo = git.Repo(search_parent_directories=True)
         git_commit_id = repo.head.object.hexsha
 
@@ -133,9 +134,9 @@ class TrainModel:
             self.logger.info(f"Roc AUC {roc_auc}")
             self.logger.info(f"F1 {f1}")
             self.logger.info(f"PR AUC {pr_auc}")
-            writer.add_scalar("Roc AUC", roc_auc)
-            writer.add_scalar("F1", f1)
-            writer.add_scalar("PR AUC", pr_auc)
+            writer.add_scalar(f"Roc AUC/{tag}", roc_auc)
+            writer.add_scalar(f"F1/{tag}", f1)
+            writer.add_scalar(f"PR AUC/{tag}", pr_auc)
 
             mlflow.log_metrics({"Roc AUC": roc_auc, "PR AUC": pr_auc, "F1": f1})
 
@@ -144,19 +145,19 @@ class TrainModel:
             plt.figure(figsize=(10, 7))
             plt.imshow(conf_matrix, cmap="Blues")
             plt.colorbar()
-            writer.add_figure("Confusion matrix", plt.gcf())
+            writer.add_figure(f"Confusion matrix/{tag}", plt.gcf())
 
             plt.plot(recall, precision, marker="*")
             plt.xlabel("Recall")
             plt.ylabel("Precision")
             plt.title("PR curve")
-            writer.add_figure("PR curve", plt.gcf())
+            writer.add_figure(f"PR curve/{tag}", plt.gcf())
 
             plt.plot(fpr, tpr, marker=".")
             plt.title("ROC curve")
             plt.xlabel("False Positive Rate")
             plt.ylabel("True Positive Rate")
-            writer.add_figure("ROC curve", plt.gcf())
+            writer.add_figure(f"ROC curve/{tag}", plt.gcf())
             writer.close()
 
     def save_model(self):
