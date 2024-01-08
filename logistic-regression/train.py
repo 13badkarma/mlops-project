@@ -21,13 +21,6 @@ from sklearn.metrics import (
 )
 from torch.utils.tensorboard import SummaryWriter
 
-TRAIN_FILE_PATH = "../data/train.csv"
-TEST_FILE_PATH = "../data/test.csv"
-PREDICTION_FILE = "../data/predictions.csv"
-ORIGINAL_DATASET = "../data/Social_Network_Ads.csv"
-MODEL_PATH = "../models/model.skops"
-NOTEBOOK = "../notebooks/logistic_regression.ipynb"
-
 
 class Stage(Enum):
     TRAIN = "train"
@@ -40,7 +33,7 @@ class TrainModel:
         self.data = None
         self.stage = stage
         self.model = model
-        self.input_file = TRAIN_FILE_PATH if stage == Stage.TRAIN else TEST_FILE_PATH
+        self.input_file = cfg.files.train if stage == Stage.TRAIN else cfg.files.test
         self.X = None
         self.y = None
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -161,13 +154,13 @@ class TrainModel:
             writer.close()
 
     def save_model(self):
-        sio.dump(self.model, MODEL_PATH)
+        sio.dump(self.model, self.cfg.files.model)
 
         # Инициализируем репозиторий DVC
         repo = Repo(".")
 
         # Добавляем модель в DVC
-        repo.add(MODEL_PATH)
+        repo.add(self.cfg.files.model)
 
         # Коммитим изменения
         repo.scm.commit("Added LogisticRegression model")
@@ -185,12 +178,12 @@ class TrainModel:
         df["y_pred"] = y_pred
 
         # Сохраняем DataFrame в CSV-файл
-        df.to_csv(PREDICTION_FILE)
+        df.to_csv(self.cfg.files.prediction)
 
 
-def check_dvc():
+def check_dvc(paths_list):
     # список файлов для проверки
-    files = [TRAIN_FILE_PATH, TEST_FILE_PATH, MODEL_PATH, NOTEBOOK, ORIGINAL_DATASET]
+    files = paths_list
 
     # путь к репозиторию DVC,текущая
     dvc_repo_path = "."
@@ -207,7 +200,7 @@ def check_dvc():
 
 @hydra.main(config_path="../configs", config_name="config", version_base="1.2")
 def main(cfg: DictConfig):
-    check_dvc()
+    check_dvc(list(cfg.files.values()))
     model = TrainModel(cfg, stage=Stage.TRAIN)
     model.load_data()
     model.fit_data()

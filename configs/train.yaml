@@ -6,7 +6,7 @@ model:
 mlflow:
   host: "http://127.0.1.1:8080"
   experiment: "pavel_p_mlops_hw2"
-  run_name: "logistic_regression"
+  run_name: "logistic-regression"
 
 tensorboard:
   folder_path: "../runs"

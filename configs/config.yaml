@@ -1,2 +1,10 @@
 defaults:
   - train
+
+files:
+  train: "../data/train.csv"
+  test: "../data/test.csv"
+  prediction: "../data/predictions.csv"
+  original_dataset: "../data/Social_Network_Ads.csv"
+  model: "../models/model.skops"
+  notebook: "../notebooks/logistic-regression.ipynb"
