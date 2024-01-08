@@ -39,7 +39,7 @@
 
 1. **Обучение модели** Перейти в папку logistic_regression. Либо запустить по пути
 
-  `python train.py` или  `python ./logistic_regression/train.py`
+  `python train.py` или  `python ./logistic-regression/train.py`
 
 Скрипт сам выгрузит  данные из DVC, сделает модель на основе train данных. Сохранит данную модель на диск
 и сделает ее пуш в DVC
@@ -49,7 +49,7 @@
 1. **Проверка модели на test данных** По аналогии с train запустить можно следующими способами.
 В зависимости от текущей директории. 
 
-`python infer.py` или  `python ./logistic_regression/infer.py`
+`python infer.py` или  `python ./logistic-regression/infer.py`
 
 Скрипт загружает при необходимости данные из dvc (т.е. может работать и без train) 
 Сохраняет результат в csv файл с признаками и предсказанным target в  `../data/predictions.csv`
